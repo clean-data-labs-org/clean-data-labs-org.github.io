@@ -38,7 +38,7 @@ Pages usually goes live within a minute or two. Confirm with:
 
 ```bash
 curl -sI https://clean-data-labs-org.github.io/
-curl -s https://clean-data-labs-org.github.io/ | grep -F "See the SAM.gov opportunities that fit you, hand-checked."
+curl -s https://clean-data-labs-org.github.io/ | grep -F "Only the SAM.gov notices that fit your search, checked by a person."
 ```
 
 A first-time Pages enable can take a little longer and may return 404 until DNS and the Pages build finish. Wait and retry. The site is ready when the response is HTTP 200 and the homepage HTML includes the headline.
