@@ -1,0 +1,3 @@
+Geist and Geist Mono are included as subset variable WOFF2 files for this site only.
+Geist is an open-source font by Vercel, licensed under the SIL Open Font License 1.1.
+https://github.com/vercel/geist-font

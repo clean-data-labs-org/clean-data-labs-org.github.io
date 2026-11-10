@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clean Data Labs — Hand-checked SAM.gov opportunities</title>
+  <meta name="description" content="We watch one SAM.gov search profile you define and send matching notices, each checked by a person against the source. Start with a free sample: last 7 days, up to 10 notices, about two business days.">
+  <meta name="theme-color" content="#0F1B2D">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="https://clean-data-labs-org.github.io/">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Clean Data Labs">
+  <meta property="og:title" content="See the SAM.gov opportunities that fit you, hand-checked">
+  <meta property="og:description" content="We watch one search you define and send matching SAM.gov notices, each checked by a person against the source. Start with a free sample.">
+  <meta property="og:url" content="https://clean-data-labs-org.github.io/">
+  <meta property="og:image" content="https://clean-data-labs-org.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@cleandatalabs">
+  <meta name="twitter:title" content="See the SAM.gov opportunities that fit you, hand-checked">
+  <meta name="twitter:description" content="We watch one search you define and send matching SAM.gov notices, each checked by a person against the source. Start with a free sample.">
+  <meta name="twitter:image" content="https://clean-data-labs-org.github.io/assets/og-image.png">
+  <style>
+    @font-face {
+      font-family: "Geist";
+      src: url("assets/geist-variable.woff2") format("woff2 supports variations"),
+           url("assets/geist-variable.woff2") format("woff2-variations");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Geist Mono";
+      src: url("assets/geist-mono-variable.woff2") format("woff2 supports variations"),
+           url("assets/geist-mono-variable.woff2") format("woff2-variations");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --ink: #0F1B2D;
+      --deep: #0A1320;
+      --mint: #2BD9A4;
+      --mint-deep: #12A47A;
+      --paper: #F6F8FA;
+      --white: #ffffff;
+      --mist: #C9D4E2;
+      --slate: #5B6B80;
+      --ink-soft: #3D4F66;
+      --line: rgba(15, 27, 45, 0.10);
+      --line-strong: rgba(15, 27, 45, 0.16);
+      --hero-line: rgba(255, 255, 255, 0.10);
+      --shadow: 0 1px 2px rgba(15, 27, 45, 0.06), 0 12px 32px rgba(15, 27, 45, 0.06);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --header-h: 72px;
+      --max: 1120px;
+      --measure: 40rem;
+      --font: "Geist", "Inter", "IBM Plex Sans", "Segoe UI", sans-serif;
+      --mono: "Geist Mono", "IBM Plex Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      font-weight: 430;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+    h1, h2, h3 { font-weight: 620; letter-spacing: -0.03em; line-height: 1.15; margin: 0; }
+    p { margin: 0; }
+    ul, ol { margin: 0; padding: 0; list-style: none; }
+
+    .skip {
+      position: absolute;
+      left: 12px;
+      top: -80px;
+      z-index: 200;
+      background: var(--mint);
+      color: var(--ink);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip:focus { top: 12px; }
+
+    :focus-visible {
+      outline: 3px solid var(--mint);
+      outline-offset: 3px;
+    }
+    .btn:focus-visible { outline-offset: 3px; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 2.5rem));
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      height: var(--header-h);
+    }
+    .site-header .wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+    }
+    .logo-word {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1;
+    }
+    .logo-name {
+      font-weight: 650;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+    .logo-labs {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-top: 0.28rem;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: var(--mist);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      line-height: 1;
+      border-radius: 999px;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid transparent;
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-mint {
+      background: var(--mint);
+      color: var(--ink);
+    }
+    .btn-mint:hover { background: #4ee0b3; }
+    .btn-ghost {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.22);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); }
+    .btn-lg { padding: 1rem 1.45rem; font-size: 1rem; }
+    .btn-ink {
+      background: var(--ink);
+      color: #fff;
+    }
+    .btn-ink:hover { background: #1a2b44; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      background: var(--ink);
+      color: #fff;
+      padding: calc(var(--header-h) + 4.5rem) 0 5.5rem;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='%23ffffff' fill-opacity='0.045'/%3E%3C/svg%3E");
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, #000 30%, transparent 75%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 40rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 1.35rem;
+    }
+    .eyebrow .mark {
+      width: 18px;
+      height: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.15rem, 4.6vw, 3.5rem);
+      font-weight: 640;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      margin-bottom: 1.25rem;
+      max-width: none;
+    }
+    .hero-lead {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--mist);
+      max-width: 36rem;
+      margin-bottom: 2.15rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem 1.25rem;
+    }
+    .hero-note {
+      color: #8A9BB0;
+      font-size: 0.9375rem;
+    }
+
+    /* Sections */
+    section { padding: 5.25rem 0; }
+    .section-kicker {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mint-deep);
+      margin-bottom: 0.85rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      margin-bottom: 0.85rem;
+    }
+    .section-lead {
+      color: var(--ink-soft);
+      font-size: 1.125rem;
+      max-width: 38rem;
+    }
+    .section-lead a, .prose a, .honest a, .builders a, .footer a:not(.logo) {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--mint-deep);
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+    }
+    .section-lead a:hover, .prose a:hover, .honest a:hover, .builders a:hover {
+      text-decoration-color: var(--ink);
+    }
+
+    /* How it works */
+    .how { background: var(--white); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .step {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.4rem 1.6rem;
+    }
+    .step-num {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--mint-deep);
+      margin-bottom: 0.7rem;
+    }
+    .step h3 {
+      font-size: 1.125rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .step p { color: var(--ink-soft); font-size: 1rem; }
+
+    /* Sample */
+    .sample { background: var(--paper); }
+    .sample-card {
+      margin-top: 2.25rem;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      overflow: hidden;
+    }
+    .sample-main { padding: 2.25rem 2.25rem 2.35rem; }
+    .sample-aside {
+      background: var(--ink);
+      color: #fff;
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .sample-list {
+      margin: 1.35rem 0 0;
+      display: grid;
+      gap: 0.85rem;
+    }
+    .sample-list li {
+      display: grid;
+      grid-template-columns: 1.15rem 1fr;
+      gap: 0.7rem;
+      align-items: start;
+      color: var(--ink-soft);
+    }
+    .sample-list svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: 0.2rem;
+      color: var(--mint-deep);
+    }
+    .sample-aside h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.65rem;
+    }
+    .sample-aside p { color: var(--mist); }
+    .sample-aside .btn { align-self: flex-start; margin-top: 0.5rem; }
+
+    /* Pricing */
+    .pricing { background: var(--white); }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+      margin-top: 2.25rem;
+    }
+    .price-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.4rem 1.6rem;
+      background: var(--paper);
+    }
+    .price-card.featured {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .price-card .amount {
+      font-size: 2rem;
+      font-weight: 640;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin: 0.15rem 0 0.55rem;
+    }
+    .price-card .amount span {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--slate);
+    }
+    .price-card.featured .amount span { color: var(--mist); }
+    .price-card p { color: var(--ink-soft); }
+    .price-card.featured p { color: var(--mist); }
+    .price-card .label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--slate);
+    }
+    .price-card.featured .label { color: var(--mint); }
+    .custom-pull {
+      margin-top: 1.15rem;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      background: var(--paper);
+    }
+    .custom-pull strong { font-weight: 620; letter-spacing: -0.02em; }
+    .custom-pull p { color: var(--ink-soft); }
+    .fine-print {
+      margin-top: 1.25rem;
+      color: var(--slate);
+      font-size: 0.9375rem;
+    }
+
+    /* Honest note */
+    .honest-wrap { background: var(--paper); padding: 0 0 5.25rem; }
+    .honest {
+      background: #fff;
+      border-left: 4px solid var(--mint);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 1.4rem 1.5rem 1.5rem 1.4rem;
+      box-shadow: var(--shadow);
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .honest h2 { font-size: 1.15rem; letter-spacing: -0.02em; margin-bottom: 0.45rem; }
+    .honest p { color: var(--ink-soft); max-width: 50rem; }
+
+    /* Builders */
+    .builders { background: var(--white); padding-top: 4.25rem; }
+    .builder-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.15rem;
+      margin-top: 1.75rem;
+    }
+    .builder-link {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.4rem;
+      text-decoration: none !important;
+      background: var(--paper);
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .builder-link:hover {
+      border-color: var(--mint-deep);
+      transform: translateY(-1px);
+    }
+    .builder-link strong {
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+    .builder-link span {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+    .builder-link .kind {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mint-deep);
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--deep);
+      color: var(--mist);
+      padding: 2.75rem 0 2.25rem;
+    }
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.35rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--mist);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+    .footer-links a:hover { color: #fff; }
+
+    /* Utilities */
+    ::selection { background: var(--mint); color: var(--ink); }
+
+    @media (max-width: 860px) {
+      .steps, .price-grid, .builder-links, .sample-card {
+        grid-template-columns: 1fr;
+      }
+      .hero { padding: calc(var(--header-h) + 3.25rem) 0 4.25rem; }
+      section { padding: 3.75rem 0; }
+      .honest-wrap { padding-bottom: 3.75rem; }
+      .sample-aside { padding: 1.75rem 1.5rem; }
+      .sample-main { padding: 1.75rem 1.5rem; }
+    }
+    .cta-short { display: none; }
+    .nowrap { white-space: nowrap; }
+
+    @media (max-width: 640px) {
+      :root { --header-h: 64px; }
+      .wrap { width: min(var(--max), calc(100% - 1.75rem)); }
+      .nav-links { display: none; }
+      .logo { gap: 0.55rem; }
+      .logo-mark { width: 30px; height: 30px; }
+      .logo-name { font-size: 1.05rem; }
+      .hero h1 { max-width: none; }
+      .cta-short { display: inline; }
+      .btn-nav .cta-long { display: none; }
+      .site-header .btn { padding: 0.65rem 0.95rem; font-size: 0.875rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+      .custom-pull { flex-direction: column; }
+      .footer-row { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="#top" id="top">
+        <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <rect x="4" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          <rect x="37" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          <rect x="70" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          <rect x="4" y="37" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          <rect x="37" y="37" width="26" height="26" rx="6" fill="rgba(255,255,255,0.14)"/>
+          <rect x="70" y="37" width="26" height="26" rx="6" fill="rgba(255,255,255,0.14)"/>
+          <rect x="4" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          <rect x="37" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          <rect x="70" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+        </svg>
+        <span class="logo-word">
+          <span class="logo-name">Clean Data</span>
+          <span class="logo-labs">Labs</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#sample">Free sample</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <a class="btn btn-mint btn-nav js-sample" href="mailto:support.cleandatalabs@gmail.com?subject=Free%20sample%20request&amp;body=Hi%20Clean%20Data%20Labs%2C%0A%0AI%27d%20like%20to%20request%20the%20free%20hand-checked%20sample.%0A%0AName%3A%0ACompany%3A%0AThe%20search%20I%20care%20about%20(NAICS%2C%20agencies%2C%20set-asides%2C%20and%2For%20keywords)%3A%0A"><span class="cta-long">Request a free sample</span><span class="cta-short">Free sample</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="hero-inner">
+          <p class="eyebrow">
+            <svg class="mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <rect x="4" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+              <rect x="37" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+              <rect x="70" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+              <rect x="4" y="37" width="26" height="26" rx="6" fill="#2BD9A4"/>
+              <rect x="37" y="37" width="26" height="26" rx="6" fill="rgba(255,255,255,0.14)"/>
+              <rect x="70" y="37" width="26" height="26" rx="6" fill="rgba(255,255,255,0.14)"/>
+              <rect x="4" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+              <rect x="37" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+              <rect x="70" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            </svg>
+            SAM.gov opportunity watch
+          </p>
+          <h1 id="hero-title">See the SAM.gov opportunities that fit you, hand-checked.</h1>
+          <p class="hero-lead">We watch one search profile you define — NAICS, agencies, <span class="nowrap">set-asides</span>, keywords — and send matching federal notices. A person checks each one against the source, and every item includes a link.</p>
+          <div class="hero-actions">
+            <a class="btn btn-mint btn-lg js-sample" href="mailto:support.cleandatalabs@gmail.com?subject=Free%20sample%20request&amp;body=Hi%20Clean%20Data%20Labs%2C%0A%0AI%27d%20like%20to%20request%20the%20free%20hand-checked%20sample.%0A%0AName%3A%0ACompany%3A%0AThe%20search%20I%20care%20about%20(NAICS%2C%20agencies%2C%20set-asides%2C%20and%2For%20keywords)%3A%0A">Request a free sample</a>
+            <p class="hero-note">Free. One search. About two business days.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="how-it-works">
+      <div class="wrap">
+        <p class="section-kicker">How it works</p>
+        <h2 class="section-title">One search, watched and checked by a person.</h2>
+        <p class="section-lead">This is a monitored, hand-checked feed for a search you already care about — not an unfiltered alert dump, and not a replacement for doing your own due diligence.</p>
+        <ol class="steps">
+          <li class="step">
+            <p class="step-num">01</p>
+            <h3>You define one search</h3>
+            <p>Share the profile that matters: NAICS codes, agencies, <span class="nowrap">set-asides</span>, keywords, or a mix. We use that one profile — nothing broader unless you ask.</p>
+          </li>
+          <li class="step">
+            <p class="step-num">02</p>
+            <h3>We watch SAM.gov for matches</h3>
+            <p>We look for notices that fit your search and pull the ones that do, with a link back to the original posting on SAM.gov.</p>
+          </li>
+          <li class="step">
+            <p class="step-num">03</p>
+            <h3>A person checks each notice</h3>
+            <p>Each item is checked against the source for identity, relevance, the source link, stated eligibility fields, deadline and timezone, and duplicates. Partial or missing data is labeled. This is not eligibility or qualification advice.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sample" id="sample">
+      <div class="wrap">
+        <p class="section-kicker">Free sample</p>
+        <h2 class="section-title">Try it on one search, at no cost.</h2>
+        <p class="section-lead">See the work on a search you already use, then decide if it’s worth continuing. One sample per company, in exchange for a short note of feedback.</p>
+        <div class="sample-card">
+          <div class="sample-main">
+            <ul class="sample-list">
+              <li>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.6"/><path d="M6.2 10.2 8.7 12.7 13.8 7.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>One search profile that you define</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.6"/><path d="M6.2 10.2 8.7 12.7 13.8 7.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>The last 7 days of matching SAM.gov notices</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.6"/><path d="M6.2 10.2 8.7 12.7 13.8 7.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Up to 10 notices, each <span class="nowrap">hand-checked</span>, with source links</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.6"/><path d="M6.2 10.2 8.7 12.7 13.8 7.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Delivered in about two business days</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.6"/><path d="M6.2 10.2 8.7 12.7 13.8 7.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>In return, a short written note on what was useful and what we missed</span>
+              </li>
+            </ul>
+          </div>
+          <div class="sample-aside">
+            <div>
+              <h3>Ready when you are.</h3>
+              <p>Send one search you care about. We’ll reply by email — no form, no account, no card.</p>
+            </div>
+            <a class="btn btn-mint btn-lg js-sample" href="mailto:support.cleandatalabs@gmail.com?subject=Free%20sample%20request&amp;body=Hi%20Clean%20Data%20Labs%2C%0A%0AI%27d%20like%20to%20request%20the%20free%20hand-checked%20sample.%0A%0AName%3A%0ACompany%3A%0AThe%20search%20I%20care%20about%20(NAICS%2C%20agencies%2C%20set-asides%2C%20and%2For%20keywords)%3A%0A">Request a free sample</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="wrap">
+        <p class="section-kicker">After the sample</p>
+        <h2 class="section-title">Keep the same search as a monitored feed, if you want it.</h2>
+        <p class="section-lead">Optional, and only if the sample is useful. Priced per client search. Cancel anytime. You don’t need to decide until you’ve seen the sample.</p>
+        <div class="price-grid">
+          <article class="price-card featured">
+            <p class="label">First search</p>
+            <p class="amount">$99<span>/month</span></p>
+            <p>A monitored, hand-checked feed for the same search you used in the sample.</p>
+          </article>
+          <article class="price-card">
+            <p class="label">Each additional search</p>
+            <p class="amount">$49–79<span>/month</span></p>
+            <p>For another client search. The exact figure depends on how broad the search is.</p>
+          </article>
+          <article class="price-card">
+            <p class="label">Paid annually</p>
+            <p class="amount">$990<span>/year</span></p>
+            <p>The first search, billed once for the year. Cancel anytime.</p>
+          </article>
+        </div>
+        <div class="custom-pull">
+          <div>
+            <p><strong>Custom one-off pull: $250</strong></p>
+            <p>A bigger historical or custom search, as a one-off job — not a subscription.</p>
+          </div>
+        </div>
+        <p class="fine-print">Cancel anytime. No long-term contract.</p>
+      </div>
+    </section>
+
+    <div class="honest-wrap">
+      <div class="wrap">
+        <aside class="honest" id="honest-note">
+          <h2>SAM.gov saved searches are free.</h2>
+          <p>SAM.gov already lets you save a search and get free daily Notify emails. This is not a replacement for that. What we add is a person filtering the results and checking each notice against the source, for one search you define.</p>
+        </aside>
+      </div>
+    </div>
+
+    <section class="builders" id="for-builders">
+      <div class="wrap">
+        <p class="section-kicker">For technical users</p>
+        <h2 class="section-title">Prefer to run the data yourself?</h2>
+        <p class="section-lead">The SAM.gov opportunities tool is also available as an open-source MCP server and as an Apify actor, if you’d rather wire it into your own workflow.</p>
+        <div class="builder-links">
+          <a class="builder-link" href="https://github.com/clean-data-labs-org/samgov-opportunities-mcp" rel="noopener noreferrer">
+            <span class="kind">Open source</span>
+            <strong>MCP server on GitHub</strong>
+            <span>github.com/clean-data-labs-org/samgov-opportunities-mcp</span>
+          </a>
+          <a class="builder-link" href="https://apify.com/cleandatalabs/samgov-opportunities" rel="noopener noreferrer">
+            <span class="kind">Apify Store</span>
+            <strong>SAM.gov opportunities actor</strong>
+            <span>apify.com/cleandatalabs/samgov-opportunities</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <div class="footer-brand">
+        <a class="logo" href="#top" aria-label="Clean Data Labs">
+          <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <rect x="4" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            <rect x="37" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            <rect x="70" y="4" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            <rect x="4" y="37" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            <rect x="37" y="37" width="26" height="26" rx="6" fill="rgba(255,255,255,0.14)"/>
+            <rect x="70" y="37" width="26" height="26" rx="6" fill="rgba(255,255,255,0.14)"/>
+            <rect x="4" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            <rect x="37" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+            <rect x="70" y="70" width="26" height="26" rx="6" fill="#2BD9A4"/>
+          </svg>
+          <span class="logo-word">
+            <span class="logo-name">Clean Data</span>
+            <span class="logo-labs">Labs</span>
+          </span>
+        </a>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="mailto:support.cleandatalabs@gmail.com">support.cleandatalabs@gmail.com</a>
+        <a href="https://linkedin.com/company/cleandatalabs" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://x.com/cleandatalabs" rel="noopener noreferrer">X</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    /* Privacy-friendly click attribution: read ?r= and append it to mailto subjects.
+       No cookies, no pixels, no third-party requests. */
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var raw = params.get("r");
+      if (!raw) return;
+      var r = String(raw).replace(/[^A-Za-z0-9._-]/g, "").slice(0, 64);
+      if (!r) return;
+      var links = document.querySelectorAll("a[href^='mailto:']");
+      for (var i = 0; i < links.length; i++) {
+        var a = links[i];
+        var href = a.getAttribute("href") || "";
+        var splitAt = href.indexOf("?");
+        var addr = splitAt === -1 ? href : href.slice(0, splitAt);
+        var qs = splitAt === -1 ? "" : href.slice(splitAt + 1);
+        var q = new URLSearchParams(qs);
+        var subject = q.get("subject") || "Free sample request";
+        if (subject.indexOf("[r=") === -1) {
+          q.set("subject", subject + " [r=" + r + "]");
+          a.setAttribute("href", addr + "?" + q.toString());
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
