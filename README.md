@@ -10,7 +10,7 @@ To request a free sample, email [support.cleandatalabs@gmail.com](mailto:support
 
 ## What’s on the page
 
-A plain description of the hand-checked SAM.gov watch, a free sample offer, optional pricing after the sample, an honest note that SAM.gov saved-search Notify emails are free, and links to the open-source [MCP server](https://github.com/clean-data-labs-org/samgov-opportunities-mcp) and the [Apify actor](https://apify.com/cleandatalabs/samgov-opportunities).
+A plain description of the hand-checked SAM.gov watch, what each notice includes, an honest note that SAM.gov saved-search emails are free (and what we add), the free sample offer, optional pricing after the sample, a short FAQ, and links to the open-source [MCP server](https://github.com/clean-data-labs-org/samgov-opportunities-mcp) and the [Apify actor](https://apify.com/cleandatalabs/samgov-opportunities).
 
 Outreach links may include a `?r=` query parameter. A short script on the page appends that value to the mailto subject so replies can be matched to a message. The page does not use cookies, pixels, or third-party trackers.
 

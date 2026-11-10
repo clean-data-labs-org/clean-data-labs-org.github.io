@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://clean-data-labs-org.github.io/
+Sitemap: https://clean-data-labs-org.github.io/sitemap.xml
