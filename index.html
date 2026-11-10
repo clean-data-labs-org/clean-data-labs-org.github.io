@@ -813,11 +813,15 @@
         var addr = splitAt === -1 ? href : href.slice(0, splitAt);
         var qs = splitAt === -1 ? "" : href.slice(splitAt + 1);
         var q = new URLSearchParams(qs);
-        var subject = q.get("subject") || "Free sample request";
-        if (subject.indexOf("[r=") === -1) {
-          q.set("subject", subject + " [r=" + r + "]");
-          a.setAttribute("href", addr + "?" + q.toString());
+        var subject = q.get("subject");
+        if (subject) {
+          if (subject.indexOf("[r=") === -1) {
+            q.set("subject", subject + " [r=" + r + "]");
+          }
+        } else {
+          q.set("subject", "[r=" + r + "]");
         }
+        a.setAttribute("href", addr + "?" + q.toString());
       }
     })();
   </script>
