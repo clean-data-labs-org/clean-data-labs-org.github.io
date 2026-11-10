@@ -29,7 +29,7 @@
   <meta name="twitter:image" content="https://clean-data-labs-org.github.io/assets/og-image.png">
   <meta name="twitter:image:alt" content="Clean Data Labs: only the SAM.gov notices that fit your search, checked by a person. Free sample.">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"Clean Data Labs","url":"https://clean-data-labs-org.github.io/","logo":"https://clean-data-labs-org.github.io/assets/icon-192.png","email":"support.cleandatalabs@gmail.com","sameAs":["https://github.com/clean-data-labs-org","https://apify.com/cleandatalabs","https://x.com/cleandatalabs","https://www.linkedin.com/company/cleandatalabs"]}
+  {"@context":"https://schema.org","@type":"Organization","name":"Clean Data Labs","url":"https://clean-data-labs-org.github.io/","logo":"https://clean-data-labs-org.github.io/assets/icon-192.png","email":"support.cleandatalabs@gmail.com","sameAs":["https://github.com/clean-data-labs-org","https://pypi.org/project/samgov-opportunities-mcp/","https://apify.com/cleandatalabs","https://x.com/cleandatalabs","https://www.linkedin.com/company/cleandatalabs"]}
   </script>
   <style>
     @font-face {
@@ -482,7 +482,7 @@
     .builders { background: var(--white); padding-top: 4.25rem; }
     .builder-links {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.15rem;
       margin-top: 1.75rem;
     }
@@ -857,12 +857,17 @@
       <div class="wrap">
         <p class="section-kicker">For technical users</p>
         <h2 class="section-title">Prefer to run the data yourself?</h2>
-        <p class="section-lead">Our SAM.gov opportunities tool is also available as an open-source MCP server and as an Apify actor, if you’d rather wire it into your own workflow.</p>
+        <p class="section-lead">Our SAM.gov opportunities tool is also available as an open-source MCP server (on GitHub and PyPI) and as an Apify actor, if you’d rather wire it into your own workflow.</p>
         <div class="builder-links">
           <a class="builder-link" href="https://github.com/clean-data-labs-org/samgov-opportunities-mcp" rel="noopener noreferrer">
             <span class="kind">Open source</span>
             <strong>MCP server on GitHub</strong>
             <span>github.com/clean-data-labs-org/samgov-opportunities-mcp</span>
+          </a>
+          <a class="builder-link" href="https://pypi.org/project/samgov-opportunities-mcp/" rel="noopener noreferrer">
+            <span class="kind">PyPI</span>
+            <strong>Install with uvx</strong>
+            <span>uvx samgov-opportunities-mcp</span>
           </a>
           <a class="builder-link" href="https://apify.com/cleandatalabs/samgov-opportunities" rel="noopener noreferrer">
             <span class="kind">Apify Store</span>
