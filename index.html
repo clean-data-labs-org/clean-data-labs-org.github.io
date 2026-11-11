@@ -29,7 +29,7 @@
   <meta name="twitter:image" content="https://clean-data-labs-org.github.io/assets/og-image.png">
   <meta name="twitter:image:alt" content="Clean Data Labs: only the SAM.gov notices that fit your search, checked by a person. Free sample.">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"Clean Data Labs","url":"https://clean-data-labs-org.github.io/","logo":"https://clean-data-labs-org.github.io/assets/icon-192.png","email":"support.cleandatalabs@gmail.com","sameAs":["https://github.com/clean-data-labs-org","https://pypi.org/project/samgov-opportunities-mcp/","https://apify.com/cleandatalabs","https://x.com/cleandatalabs","https://www.linkedin.com/company/cleandatalabs"]}
+  {"@context":"https://schema.org","@type":"Organization","name":"Clean Data Labs","url":"https://clean-data-labs-org.github.io/","logo":"https://clean-data-labs-org.github.io/assets/icon-192.png","email":"support.cleandatalabs@gmail.com","founder":{"@type":"Person","name":"Alex","jobTitle":"Founder"},"sameAs":["https://github.com/clean-data-labs-org","https://pypi.org/project/samgov-opportunities-mcp/","https://apify.com/cleandatalabs","https://x.com/cleandatalabs","https://www.linkedin.com/company/cleandatalabs"]}
   </script>
   <style>
     @font-face {
@@ -311,14 +311,14 @@
       font-size: 1.125rem;
       max-width: 38rem;
     }
-    .section-lead a, .prose a, .honest a, .builders a, .faq a, .hero-alt a, .custom-pull a, .footer a:not(.logo) {
+    .section-lead a, .prose a, .honest a, .who a, .builders a, .faq a, .hero-alt a, .custom-pull a, .footer a:not(.logo) {
       color: var(--ink);
       text-decoration: underline;
       text-decoration-color: var(--mint-deep);
       text-underline-offset: 3px;
       text-decoration-thickness: 1.5px;
     }
-    .section-lead a:hover, .prose a:hover, .honest a:hover, .builders a:hover, .faq a:hover, .custom-pull a:hover {
+    .section-lead a:hover, .prose a:hover, .honest a:hover, .who a:hover, .builders a:hover, .faq a:hover, .custom-pull a:hover {
       text-decoration-color: var(--ink);
     }
 
@@ -478,6 +478,22 @@
     .honest p { color: var(--ink-soft); max-width: 50rem; }
     .honest p + p { margin-top: 0.75rem; }
 
+    /* Who we are */
+    .who { background: var(--white); }
+    .who-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .who-body p { color: var(--ink-soft); max-width: 40rem; }
+    .who-body p + p { margin-top: 0.75rem; }
+    .footer-tagline {
+      color: #8A9BB0;
+      font-size: 0.875rem;
+      margin-top: 0.15rem;
+    }
+
     /* Builders */
     .builders { background: var(--white); padding-top: 4.25rem; }
     .builder-links {
@@ -589,7 +605,7 @@
     ::selection { background: var(--mint); color: var(--ink); }
 
     @media (max-width: 860px) {
-      .steps, .price-grid, .builder-links, .sample-card, .format-grid, .compare {
+      .steps, .price-grid, .builder-links, .sample-card, .format-grid, .compare, .who-grid {
         grid-template-columns: 1fr;
       }
       .hero { padding: calc(var(--header-h) + 3.25rem) 0 4.25rem; }
@@ -762,6 +778,20 @@
       </div>
     </section>
 
+
+    <section class="who" id="who-we-are" aria-labelledby="who-title">
+      <div class="wrap who-grid">
+        <div>
+          <p class="section-kicker">Who we are</p>
+          <h2 class="section-title" id="who-title">A small company, with a person behind the list.</h2>
+        </div>
+        <div class="who-body">
+          <p>Clean Data Labs is run by Alex, its founder. When you send a search, a person reads the matching SAM.gov notices, checks each one against the source, and sends you only the ones that fit.</p>
+          <p>You can write to us at <a href="mailto:support.cleandatalabs@gmail.com">support.cleandatalabs@gmail.com</a>.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="sample" id="sample">
       <div class="wrap">
         <p class="section-kicker">Free sample</p>
@@ -847,7 +877,7 @@
           </details>
           <details>
             <summary>What do you do with my search details?</summary>
-            <p>We use them to put together your sample and reply to you. This page doesn’t use cookies, ad pixels, or trackers.</p>
+            <p>We use them to put together your sample and reply to you. This page doesn’t use cookies, ad pixels, or trackers. There’s a short page on <a href="how-we-use-your-details.html">how we use your details</a>.</p>
           </details>
         </div>
       </div>
@@ -900,9 +930,12 @@
               <span class="logo-labs">Labs</span>
             </span>
           </a>
+          <p class="footer-tagline">Hand-checked SAM.gov notices</p>
         </div>
         <nav class="footer-links" aria-label="Footer">
           <a href="mailto:support.cleandatalabs@gmail.com">support.cleandatalabs@gmail.com</a>
+          <a href="#who-we-are">Who we are</a>
+          <a href="how-we-use-your-details.html">How we use your details</a>
           <a href="https://github.com/clean-data-labs-org" rel="noopener noreferrer">GitHub</a>
           <a href="https://www.linkedin.com/company/cleandatalabs" rel="noopener noreferrer">LinkedIn</a>
           <a href="https://x.com/cleandatalabs" rel="noopener noreferrer">X</a>
